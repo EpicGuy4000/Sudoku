@@ -1,6 +1,7 @@
 ﻿using SodukuConsoleApp.Command;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SodukuConsoleApp
 {
@@ -23,19 +24,20 @@ namespace SodukuConsoleApp
 
                 try
                 {
-                    foreach (var command in _commands)
+                    var commandToExecute = _commands.FirstOrDefault(command => command.Matches(commandLine));
+
+                    if (commandToExecute != null)
                     {
-                        if (command.Matches(commandLine))
-                        {
-                            command.Execute(commandLine);
-                            break;
-                        }
+                        commandToExecute.Execute(commandLine);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Invalid command {commandLine}.");
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Invalid command {commandLine}. Exception throw {ex.Message}");
-                    throw;
                 }
             }
         }

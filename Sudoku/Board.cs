@@ -18,6 +18,7 @@ namespace Sudoku
         {
             var singleGroupSolver = new SingleGroupSolver();
             var possibleValueSolver = new PossibleValuesPerGroupSolver();
+            var pointingPairSOlver = new PointingPairSolver(this);
             _solutionLogger = new SolutionLogger();
 
             Rows = Enumerable.Range(1, 9).Select(index => new TileGroup(index)).ToArray();
@@ -33,6 +34,7 @@ namespace Sudoku
                     tile.Register(_solutionLogger);
                     tile.Register(singleGroupSolver);
                     tile.Register(possibleValueSolver);
+                    tile.Register(pointingPairSOlver);
 
                     var quadrantIndex = quadrant.Tiles.TakeWhile(quadrantTile => quadrantTile != null).Count();
                     quadrant[quadrantIndex] = tile;
