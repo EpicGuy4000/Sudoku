@@ -42,6 +42,15 @@ namespace Sudoku
             }
         }
 
+        public void Reset()
+        {
+            _solutionLogger.SolutionPath.Clear();
+            foreach (var tileGroup in Rows.Union(Columns).Union(Quadrants))
+            {
+                tileGroup.Reset();
+            }
+        }
+
         public void SetTileValue(int rowIndex, int columnIndex, int value)
         {
             if (value < 1 || value > 9)

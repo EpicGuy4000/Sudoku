@@ -38,6 +38,19 @@ namespace Sudoku
             }
         }
 
+        public void Reset()
+        {
+            foreach (var tile in _tiles)
+            {
+                tile.Reset();
+
+                foreach (var possibleValue in tile.PossibleValues)
+                {
+                    TilesPerPossibleValue[possibleValue].Add(tile);
+                }
+            }
+        }
+
         public IReadOnlyCollection<Tile> Tiles => _tiles;
 
         public bool IsSolved => _tiles.Aggregate(true, (allAreSolved, tile) => allAreSolved && tile.IsSolved);

@@ -7,7 +7,9 @@ namespace Sudoku
     {
         private readonly List<ITileObserver> _observers = new List<ITileObserver>();
 
-        private readonly List<int> _possibleValues = Enumerable.Range(1, 9).ToList();
+        private static IEnumerable<int> TilePossibleValuesStartingState = Enumerable.Range(1, 9);
+
+        private readonly List<int> _possibleValues = TilePossibleValuesStartingState.ToList();
 
         public Tile(TileGroup row, TileGroup column, TileGroup quadrant)
         {
@@ -23,6 +25,12 @@ namespace Sudoku
         public IReadOnlyCollection<int> PossibleValues => _possibleValues;
 
         public bool IsSolved => _possibleValues.Count == 1;
+
+        public void Reset()
+        {
+            _possibleValues.Clear();
+            _possibleValues.AddRange(TilePossibleValuesStartingState);
+        }
 
         public int Value
         {
